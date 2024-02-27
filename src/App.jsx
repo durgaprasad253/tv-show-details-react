@@ -13,22 +13,34 @@ export function App() {
   const [recommendationsList, setRecommendationsList] = useState([]);
 
   async function fetchPopular() {
-    const popularTvShowList = await TVShowApi.fetchPopular();
-    if (popularTvShowList.length > 0) {
-      setCurrentTvShow(popularTvShowList[0]);
+    try {
+      const popularTvShowList = await TVShowApi.fetchPopular();
+      if (popularTvShowList.length > 0) {
+        setCurrentTvShow(popularTvShowList[0]);
+      }
+    } catch (error) {
+      alert("Something Went Wrong");
     }
   }
 
   async function search(text) {
-    const searchResult = await TVShowApi.search(text);
-    if (searchResult.length > 0) setCurrentTvShow(searchResult[0]);
+    try {
+      const searchResult = await TVShowApi.search(text);
+      if (searchResult.length > 0) setCurrentTvShow(searchResult[0]);
+    } catch (error) {
+      alert("Something Went Wrong");
+    }
   }
 
   async function fetchRecommendations() {
-    const recommendations = await TVShowApi.fetchRecommendation(
-      currentTvShow.id
-    );
-    setRecommendationsList(recommendations);
+    try {
+      const recommendations = await TVShowApi.fetchRecommendation(
+        currentTvShow.id
+      );
+      setRecommendationsList(recommendations);
+    } catch (error) {
+      alert("Something Went Wrong");
+    }
   }
   useEffect(() => {
     fetchPopular();
